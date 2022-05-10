@@ -1,23 +1,23 @@
+import React from "react";
+import { useContextData } from "./context/Context";
+import { ConnectWallet } from "./utils/ConnectWallet";
 
-function App() {
+export default function App() {
+  const [{ isWalletConnected, account }, dispatch] = useContextData();
+
+  console.log(isWalletConnected)
+  console.log(account)
+
+  const handleLogin = () => {
+    if(!isWalletConnected){
+      ConnectWallet(dispatch);
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app__container">
+      <h1>{isWalletConnected ? account : "not logged in"}</h1>
+      <button onClick={handleLogin}>Login</button>
     </div>
   );
 }
-
-export default App;
